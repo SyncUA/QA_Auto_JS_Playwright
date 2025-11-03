@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        /* ===== Основні налаштування ===== */
+        "target": "ESNext",
+        "module": "NodeNext", // ← ВАЖЛИВО для "type": "module"
+        "moduleResolution": "NodeNext", // ← теж, щоб імпорти коректно працювали
+        "strict": true,
+        "allowJs": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+
+        /* ===== Вихідні каталоги ===== */
+        "outDir": "dist",
+        "rootDir": ".",
+
+        /* ===== Типи ===== */
+        "types": ["node", "@playwright/test"]
+    },
+    "include": ["**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+}
