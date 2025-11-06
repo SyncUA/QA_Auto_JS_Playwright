@@ -1,23 +1,28 @@
 {
     "compilerOptions": {
         /* ===== Основні налаштування ===== */
-        "target": "ESNext",
-        "module": "NodeNext", // ← ВАЖЛИВО для "type": "module"
-        "moduleResolution": "NodeNext", // ← теж, щоб імпорти коректно працювали
-        "strict": true,
-        "allowJs": false,
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
+        "target": "ESNext", // ← Підтримка сучасного синтаксису JS
+        "module": "NodeNext", // ← ВАЖЛИВО для роботи з "type": "module" (ESM)
+        "moduleResolution": "NodeNext", // ← Узгоджує TypeScript із поведінкою Node.js у ESM
+        "strict": true, // ← Увімкнено сувору перевірку типів (рекомендовано)
+        "allowJs": false, // ← Не дозволяємо JS-файли в проєкті (тільки TS)
+        "resolveJsonModule": true, // ← Дозволяє імпорт JSON-файлів як модулів
+        "esModuleInterop": true, // ← Додає сумісність між ESM та CommonJS
+        "skipLibCheck": true, // ← Пропускає перевірку типів у node_modules
+        "forceConsistentCasingInFileNames": true, // ← Гарантує єдиний регістр у назвах файлів
+        "isolatedModules": true, // ← Корисно при ESM, щоб TS обробляв кожен файл окремо
+
+        /* ===== Важливо для імпортів .ts ===== */
+        "allowImportingTsExtensions": true, // Дозволяє імпорти з .ts
+        "noEmit": true, // ❗ Нічого не компілюємо у .js
 
         /* ===== Вихідні каталоги ===== */
-        "outDir": "dist",
-        "rootDir": ".",
+        "outDir": "dist", // ← Куди компілюватимуться файли після tsc
+        "rootDir": ".", // ← Звідки брати вихідні файли
 
         /* ===== Типи ===== */
-        "types": ["node", "@playwright/test"]
+        "types": ["node", "@playwright/test"] // ← Типи для Node.js та Playwright
     },
-    "include": ["**/*.ts"],
-    "exclude": ["node_modules", "dist"]
+    "include": ["**/*.ts"], // ← Включаємо всі TS-файли у проєкті
+    "exclude": ["node_modules", "dist"] // ← Не перевіряємо скомпільовані файли та залежності
 }

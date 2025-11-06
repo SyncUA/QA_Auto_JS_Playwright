@@ -20,7 +20,7 @@ export default defineConfig({
     reporter: "html" /* Reporter to use. See https://playwright.dev/docs/test-reporters */,
 
     testIgnore: "e2e/0-0-trash",
-    testMatch: "e2e/24-1-Locators, actions, asserts/2-elementsRegistrationForm.spec.ts",
+    testMatch: ["e2e/25-*/**/*.spec.ts"],
 
     use: {
         baseURL: "https://guest:welcome2qauto@qauto.forstudy.space/" /* Base URL to use in actions like `await page.goto('')`. */,
@@ -34,7 +34,7 @@ export default defineConfig({
             use: { ...devices["Desktop Chrome"] },
         },
 
-        {
+        /* {
             name: "firefox",
             use: { ...devices["Desktop Firefox"] },
         },
@@ -42,7 +42,7 @@ export default defineConfig({
         {
             name: "webkit",
             use: { ...devices["Desktop Safari"] },
-        },
+        }, */
 
         /* Test against mobile viewports. */
         // {
