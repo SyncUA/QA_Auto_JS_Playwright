@@ -1,4 +1,4 @@
-import { expect, Locator } from "@playwright/test";
+import { Locator } from "@playwright/test";
 
 // Заповнює поле і знімає фокус
 export async function fillAndBlur(locator: Locator, value: string): Promise<void> {

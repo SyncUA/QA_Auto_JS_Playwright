@@ -17,7 +17,7 @@ test.describe("Main page", () => {
         await homePage.verifySocialIconsVisible();
     });
     test("Check contacts", async () => {
-        await homePage.verifyContacts();
+        await homePage.verifyContactsVisible();
     });
     test("Check elements text and attributes", async () => {
         await homePage.verifyElementsTextAndAttributes();

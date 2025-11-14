@@ -1,116 +1,141 @@
-import { Locator, expect } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { BasePage } from "../BasePage.ts";
 
 export class HomePage extends BasePage {
-    private readonly homeButton: Locator = this.page.locator("header a.btn.header-link.-active");
-    private readonly aboutButton: Locator = this.page.locator("header >> button[appscrollto='aboutSection']");
-    private readonly contactsButton: Locator = this.page.locator("header >> button[appscrollto='contactsSection']");
-    private readonly guestLogInButton: Locator = this.page.locator("header button.header-link.-guest");
-    private readonly signInButton: Locator = this.page.locator("header button.btn-outline-white.header_signin");
-    private readonly signUpButton: Locator = this.page.getByRole("button", { name: "Sign up" });
+    private readonly _homeButton: Locator;
+    private readonly _aboutButton: Locator;
+    private readonly _contactsButton: Locator;
+    private readonly _guestLogInButton: Locator;
+    private readonly _signInButton: Locator;
+    private readonly _signUpButton: Locator;
 
-    private readonly facebookIcon: Locator = this.page.locator("span.socials_icon.icon.icon-facebook");
-    private readonly telegramIcon: Locator = this.page.locator("span.socials_icon.icon.icon-telegram");
-    private readonly youtubeIcon: Locator = this.page.locator("span.socials_icon.icon.icon-youtube");
-    private readonly instagramIcon: Locator = this.page.locator("span.socials_icon.icon.icon-instagram");
-    private readonly linkedInIcon: Locator = this.page.locator("span.socials_icon.icon.icon-linkedin");
+    protected readonly _logInForm: Locator;
+    protected readonly _registrationForm: Locator;
 
-    private readonly link: Locator = this.page.locator("a.contacts_link.display-4");
-    private readonly mail: Locator = this.page.locator("a.contacts_link.h4");
+    private readonly _facebookLink: Locator;
+    private readonly _telegramLink: Locator;
+    private readonly _youtubeLink: Locator;
+    private readonly _instagramLink: Locator;
+    private readonly _linkedInLink: Locator;
 
-    async openRegistrationForm(): Promise<void> {
-        await this.signUpButton.click();
-        await this.page.waitForSelector("div.modal-content");
-        await expect(this.page.locator("div.modal-content")).toBeVisible();
+    private readonly _siteLink: Locator;
+    private readonly _emailLink: Locator;
+
+    constructor(page: Page) {
+        super(page);
+        this._homeButton = this.page.getByRole("link", { name: "Home" });
+        this._aboutButton = this.page.getByRole("button", { name: "About" });
+        this._contactsButton = this.page.getByRole("button", { name: "Contacts" });
+        this._guestLogInButton = this.page.getByRole("button", { name: "Guest log in" });
+        this._signInButton = this.page.getByRole("button", { name: "Sign In" });
+        this._signUpButton = this.page.getByRole("button", { name: "Sign up" });
+
+        this._logInForm = this.page.locator("app-signin-modal");
+        this._registrationForm = this.page.locator("app-signup-modal");
+
+        this._facebookLink = this.page.locator(".icon-facebook").locator("..");
+        this._telegramLink = this.page.locator(".icon-telegram").locator("..");
+        this._youtubeLink = this.page.locator(".icon-youtube").locator("..");
+        this._instagramLink = this.page.locator(".icon-instagram").locator("..");
+        this._linkedInLink = this.page.locator(".icon-linkedin").locator("..");
+
+        this._siteLink = this.page.getByRole("link", { name: "ithillel.ua", exact: true });
+        this._emailLink = this.page.locator("a.contacts_link", { hasText: "support@ithillel.ua" });
     }
-    async openLoginForm(): Promise<void> {
-        await this.signInButton.click();
-        await this.page.waitForSelector("div.modal-content");
-        await expect(this.page.locator("div.modal-content")).toBeVisible();
+    /* ====== Відкриття форм ====== */
+    async openLogInForm(): Promise<void> {
+        await this._signInButton.click();
+        await expect(this._logInForm).toBeVisible();
+    }
+    async openRegistrationForm(): Promise<void> {
+        await this._signUpButton.click();
+        await expect(this._registrationForm).toBeVisible();
+    }
+    get logInForm(): Locator {
+        return this._logInForm;
+    }
+    get registrationForm(): Locator {
+        return this._registrationForm;
     }
 
     /* ====== Кліки по кнопкам ====== */
     async clickHomeButton(): Promise<void> {
-        await this.homeButton.click();
+        await this._homeButton.click();
     }
     async clickAboutButton(): Promise<void> {
-        await this.aboutButton.click();
+        await this._aboutButton.click();
     }
     async clickContactsButton(): Promise<void> {
-        await this.contactsButton.click();
+        await this._contactsButton.click();
     }
     async clickGuestLogInButton(): Promise<void> {
-        await this.guestLogInButton.click();
+        await this._guestLogInButton.click();
     }
     async clickSignInButton(): Promise<void> {
-        await this.signInButton.click();
+        await this._signInButton.click();
     }
     async clickSignUpButton(): Promise<void> {
-        await this.signUpButton.click();
+        await this._signUpButton.click();
     }
     async clickFacebookIcon(): Promise<void> {
-        await this.facebookIcon.click();
+        await this._facebookLink.click();
     }
     async clickTelegramIcon(): Promise<void> {
-        await this.telegramIcon.click();
+        await this._telegramLink.click();
     }
     async clickYouTubeIcon(): Promise<void> {
-        await this.youtubeIcon.click();
+        await this._youtubeLink.click();
     }
     async clickInstagramIcon(): Promise<void> {
-        await this.instagramIcon.click();
+        await this._instagramLink.click();
     }
     async clickLinkedInIcon(): Promise<void> {
-        await this.linkedInIcon.click();
+        await this._linkedInLink.click();
     }
     async clickLink(): Promise<void> {
-        await this.link.click();
+        await this._siteLink.click();
     }
     async clickMail(): Promise<void> {
-        await this.mail.click();
+        await this._emailLink.click();
     }
 
     /* ====== Додаткові перевірки ====== */
-
     async verifyButtonsVisible(): Promise<void> {
         await this.scrollToHeader();
-        await expect(this.homeButton).toBeVisible();
-        await expect(this.aboutButton).toBeVisible();
-        await expect(this.contactsButton).toBeVisible();
-        await expect(this.guestLogInButton).toBeVisible();
-        await expect(this.signInButton).toBeVisible();
-        await expect(this.signUpButton).toBeVisible();
+        await expect(this._homeButton).toBeVisible();
+        await expect(this._aboutButton).toBeVisible();
+        await expect(this._contactsButton).toBeVisible();
+        await expect(this._guestLogInButton).toBeVisible();
+        await expect(this._signInButton).toBeVisible();
+        await expect(this._signUpButton).toBeVisible();
     }
-
     async verifySocialIconsVisible(): Promise<void> {
         await this.scrollToFooter();
-        await expect(this.facebookIcon).toBeVisible();
-        await expect(this.telegramIcon).toBeVisible();
-        await expect(this.youtubeIcon).toBeVisible();
-        await expect(this.instagramIcon).toBeVisible();
-        await expect(this.linkedInIcon).toBeVisible();
+        await expect(this._facebookLink).toBeVisible();
+        await expect(this._telegramLink).toBeVisible();
+        await expect(this._youtubeLink).toBeVisible();
+        await expect(this._instagramLink).toBeVisible();
+        await expect(this._linkedInLink).toBeVisible();
     }
-
-    async verifyContacts(): Promise<void> {
-        await expect(this.link).toHaveAttribute("href", /https?:\/\//);
-        await expect(this.mail).toContainText("@");
+    async verifyContactsVisible(): Promise<void> {
+        await this.scrollToFooter();
+        await expect(this._siteLink).toBeVisible();
+        await expect(this._emailLink).toBeVisible();
     }
 
     async verifyElementsTextAndAttributes(): Promise<void> {
-        await expect(this.homeButton).toHaveText("Home");
-        await expect(this.aboutButton).toHaveText("About");
-        await expect(this.contactsButton).toHaveText("Contacts");
-        await expect(this.guestLogInButton).toHaveText("Guest log in");
-        await expect(this.signInButton).toHaveText("Sign In");
-        await expect(this.signUpButton).toHaveText("Sign up");
-        await expect(this.facebookIcon).toHaveCount(1);
-        await expect(this.telegramIcon).toHaveCount(1);
-        await expect(this.youtubeIcon).toHaveCount(1);
-        await expect(this.instagramIcon).toHaveCount(1);
-        await expect(this.linkedInIcon).toHaveCount(1);
-        await expect(this.link).toHaveAttribute("href", "https://ithillel.ua");
-        await expect(this.link).toHaveText("ithillel.ua");
-        await expect(this.mail).toHaveAttribute("href", "mailto:developer@ithillel.ua");
-        await expect(this.mail).toHaveText("support@ithillel.ua");
+        await expect(this._homeButton).toHaveText("Home");
+        await expect(this._aboutButton).toHaveText("About");
+        await expect(this._contactsButton).toHaveText("Contacts");
+        await expect(this._guestLogInButton).toHaveText("Guest log in");
+        await expect(this._signInButton).toHaveText("Sign In");
+        await expect(this._signUpButton).toHaveText("Sign up");
+        await expect(this._facebookLink).toHaveAttribute("href", "https://www.facebook.com/Hillel.IT.School");
+        await expect(this._telegramLink).toHaveAttribute("href", "https://t.me/ithillel_kyiv");
+        await expect(this._youtubeLink).toHaveAttribute("href", "https://www.youtube.com/user/HillelITSchool?sub_confirmation=1");
+        await expect(this._instagramLink).toHaveAttribute("href", "https://www.instagram.com/hillel_itschool/");
+        await expect(this._linkedInLink).toHaveAttribute("href", "https://www.linkedin.com/school/ithillel/");
+        await expect(this._siteLink).toHaveAttribute("href", "https://ithillel.ua");
+        await expect(this._emailLink).toHaveAttribute("href", "mailto:developer@ithillel.ua");
     }
 }

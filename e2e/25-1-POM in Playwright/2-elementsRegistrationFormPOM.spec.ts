@@ -1,14 +1,6 @@
-import { test, expect, Locator } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { HomePage } from "../../pom/pages/HomePage.ts";
 import { RegistrationForm } from "../../pom/forms/RegistrationForm.ts";
-
-/* let closeButton: Locator;
-let nameInput: Locator;
-let lastNameInput: Locator;
-let emailInput: Locator;
-let passwordInput: Locator;
-let repeatPasswordInput: Locator;
-let registrationButton: Locator; */
 
 let homePage: HomePage;
 let registrationForm: RegistrationForm;
@@ -34,7 +26,7 @@ test.describe("Registration Form", () => {
 
         test("Empty field → 'Name required'", async () => {
             await registrationForm.enterName("");
-
+            await registrationForm.verifyFormsTextErrors("Name required");
             await expect(registrationForm.registrationForm.getByText("Name required")).toBeVisible();
             await expect(registrationForm.nameInput).toHaveClass("form-control ng-pristine ng-invalid is-invalid ng-touched");
         });
