@@ -1,74 +1,144 @@
-import { defineConfig, devices } from "@playwright/test";
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
+/*
  * See https://playwright.dev/docs/test-configuration.
  */
-export default defineConfig({
+import { defineConfig, devices } from "@playwright/test";
+import { fileURLToPath } from "url";
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Функція для ізольованого читання .env.<name>
+function loadEnv(name: string) {
+    const envPath = path.resolve(__dirname, `.env.${name}`);
+    const raw = fs.readFileSync(envPath, "utf-8");
+    const env = dotenv.parse(raw);
+
+    return {
+        baseURL: env.BASE_URL,
+        httpCredentials: {
+            username: env.AUTH_USERNAME,
+            password: env.AUTH_PASSWORD,
+        },
+        testUser: {
+            email: env.TEST_USER_EMAIL,
+            password: env.TEST_USER_PASSWORD,
+        },
+        trace: {
+            mode: "on-first-retry" as const,
+            screenshots: true,
+            snapshots: true,
+        },
+    };
+}
+// Спільна частина конфігу
+const baseConfig = {
     testDir: "./e2e",
     fullyParallel: false /* Run tests in files in parallel */,
     forbidOnly: !!process.env.CI /* Fail the build on CI if you accidentally left test.only in the source code. */,
     retries: process.env.CI ? 2 : 0 /* Retry on CI only */,
-    workers: process.env.CI ? 1 : undefined /* Opt out of parallel tests on CI. */,
+    workers: process.env.CI ? 1 : 1 /* Opt out of parallel tests on CI. */,
     reporter: "html" /* Reporter to use. See https://playwright.dev/docs/test-reporters */,
-
     testIgnore: "e2e/0-0-trash",
-    testMatch: ["e2e/25-*/**/*.spec.ts"],
+    testMatch: ["e2e/26-*/**/*.spec.ts"],
+};
 
-    use: {
-        baseURL: "https://guest:welcome2qauto@qauto.forstudy.space/" /* Base URL to use in actions like `await page.goto('')`. */,
-        trace: "on-first-retry" /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */,
-    },
+// Визначаємо, чи задано CONFIG_FILE
+const isVSCode = !!process.env.VSCODE_PID;
+const configName = isVSCode ? undefined : process.env.CONFIG_FILE || "prod";
 
-    /* Configure projects for major browsers */
-    projects: [
-        {
-            name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
-        },
+let config;
 
-        /* {
-            name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
-        },
+if (configName) {
+    // Один use-блок для CLI запуску
+    const envConfig = loadEnv(configName);
+    config = defineConfig({
+        ...baseConfig,
+        projects: [
+            {
+                name: `chromium:${configName}`,
+                use: {
+                    ...devices["Desktop Chrome"],
+                    ...envConfig,
+                },
+            },
+            {
+                name: `firefox:${configName}`,
+                use: {
+                    ...devices["Desktop Firefox"],
+                    ...envConfig,
+                },
+            },
+            {
+                name: `webkit:${configName}`,
+                use: {
+                    ...devices["Desktop Safari"],
+                    ...envConfig,
+                },
+            },
+        ],
+    });
+} else {
+    // Projects для Testing вкладки Playwright extension
+    config = defineConfig({
+        ...baseConfig,
+        /* Configure projects for major browsers */
+        projects: [
+            {
+                name: "chromium-prod",
+                use: { ...devices["Desktop Chrome"], ...loadEnv("prod") },
+            },
+            {
+                name: "chromium-dev",
+                use: { ...devices["Desktop Chrome"], ...loadEnv("dev") },
+            },
+            {
+                name: "firefox-prod",
+                use: { ...devices["Desktop Firefox"], ...loadEnv("prod") },
+            },
+            {
+                name: "firefox-dev",
+                use: { ...devices["Desktop Firefox"], ...loadEnv("dev") },
+            },
 
-        {
-            name: "webkit",
-            use: { ...devices["Desktop Safari"] },
-        }, */
+            {
+                name: "webkit-prod",
+                use: { ...devices["Desktop Safari"], ...loadEnv("prod") },
+            },
+            {
+                name: "webkit-dev",
+                use: { ...devices["Desktop Safari"], ...loadEnv("dev") },
+            },
 
-        /* Test against mobile viewports. */
-        // {
-        //   name: 'Mobile Chrome',
-        //   use: { ...devices['Pixel 5'] },
+            /* Test against mobile viewports. */
+            // {
+            //   name: 'Mobile Chrome',
+            //   use: { ...devices['Pixel 5'] },
+            // },
+            // {
+            //   name: 'Mobile Safari',
+            //   use: { ...devices['iPhone 12'] },
+            // },
+
+            /* Test against branded browsers. */
+            // {
+            //   name: 'Microsoft Edge',
+            //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+            // },
+            // {
+            //   name: 'Google Chrome',
+            //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+            // },
+        ],
+
+        /* Run your local dev server before starting the tests */
+        // webServer: {
+        //   command: 'npm run start',
+        //   url: 'http://localhost:3000',
+        //   reuseExistingServer: !process.env.CI,
         // },
-        // {
-        //   name: 'Mobile Safari',
-        //   use: { ...devices['iPhone 12'] },
-        // },
-
-        /* Test against branded browsers. */
-        // {
-        //   name: 'Microsoft Edge',
-        //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-        // },
-        // {
-        //   name: 'Google Chrome',
-        //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-        // },
-    ],
-
-    /* Run your local dev server before starting the tests */
-    // webServer: {
-    //   command: 'npm run start',
-    //   url: 'http://localhost:3000',
-    //   reuseExistingServer: !process.env.CI,
-    // },
-});
+    });
+}
+export default config;
