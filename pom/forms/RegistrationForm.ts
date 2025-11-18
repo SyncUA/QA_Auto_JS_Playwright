@@ -10,6 +10,7 @@ export class RegistrationForm extends HomePage {
     private readonly _passwordInput: Locator;
     private readonly _repeatPasswordInput: Locator;
     private readonly _registrationButton: Locator;
+    private readonly _errorMessage: Locator;
 
     constructor(page: Page) {
         super(page);
@@ -20,6 +21,7 @@ export class RegistrationForm extends HomePage {
         this._passwordInput = this._registrationForm.locator("#signupPassword");
         this._repeatPasswordInput = this._registrationForm.locator("#signupRepeatPassword");
         this._registrationButton = this._registrationForm.getByRole("button", { name: "Register" });
+        this._errorMessage = this._registrationForm.locator("p.alert.alert-danger");
     }
 
     /* ======Дії з елементами форми реєстрації====== */
@@ -62,6 +64,15 @@ export class RegistrationForm extends HomePage {
         await expect(this._registrationButton).toBeEnabled();
         await this.clickRegistrationButton();
         await expect(this._registrationForm).toBeHidden();
+    }
+    async checkError(boolean: boolean, timeout = 300): Promise<void> {
+        await this.page.waitForTimeout(timeout);
+        if (boolean === false) {
+            await expect(this._errorMessage).not.toBeVisible();
+        } else if (boolean === true) {
+            await expect(this._errorMessage).toBeVisible();
+            await expect(this._errorMessage).toContainText("User already exists");
+        }
     }
 
     /* ======Перевірка елементів форми реєстрації====== */

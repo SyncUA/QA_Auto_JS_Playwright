@@ -19,9 +19,33 @@
         "lint-fix": "eslint . --fix",
         "format": "prettier .",
         "format-fix": "prettier . --write",
-        "playwright-test": "npx playwright test",
-        "playwright-headed": "npx playwright test --headed",
-        "playwright-ui": "npx playwright test --ui"
+        "test:cli": "npx playwright test",
+        "test:headed": "npx playwright test --headed",
+        "test:ui": "npx playwright test --ui",
+        "test:prod:cli": "cross-env CONFIG_FILE=prod npx playwright test",
+        "test:prod:headed": "cross-env CONFIG_FILE=prod npx playwright test --headed",
+        "test:prod:ui": "cross-env CONFIG_FILE=prod npx playwright test --ui",
+        "test:dev:cli": "cross-env CONFIG_FILE=dev npx playwright test",
+        "test:dev:headed": "cross-env CONFIG_FILE=dev npx playwright test --headed",
+        "test:dev:ui": "cross-env CONFIG_FILE=dev npx playwright test --ui",
+        "test:prod:chrome:cli": "cross-env CONFIG_FILE=prod npx playwright test --project=chromium:prod",
+        "test:prod:chrome:headed": "cross-env CONFIG_FILE=prod npx playwright test --project=chromium:prod --headed",
+        "test:prod:chrome:ui": "cross-env CONFIG_FILE=prod npx playwright test --project=chromium:prod --ui",
+        "test:prod:firefox:cli": "cross-env CONFIG_FILE=prod npx playwright test --project=firefox:prod ",
+        "test:prod:firefox:headed": "cross-env CONFIG_FILE=prod npx playwright test --project=firefox:prod --headed",
+        "test:prod:firefox:ui": "cross-env CONFIG_FILE=prod npx playwright test --project=firefox:prod --ui",
+        "test:prod:safari:cli": "cross-env CONFIG_FILE=prod npx playwright test --project=webkit:prod ",
+        "test:prod:safari:headed": "cross-env CONFIG_FILE=prod npx playwright test --project=webkit:prod --headed",
+        "test:prod:safari:ui": "cross-env CONFIG_FILE=prod npx playwright test --project=webkit:prod --ui",
+        "test:dev:chrome:cli": "cross-env CONFIG_FILE=dev npx playwright test --project=chromium:dev ",
+        "test:dev:chrome:headed": "cross-env CONFIG_FILE=dev npx playwright test --project=chromium:dev --headed",
+        "test:dev:chrome:ui": "cross-env CONFIG_FILE=dev npx playwright test --project=chromium:dev --ui",
+        "test:dev:firefox:cli": "cross-env CONFIG_FILE=dev npx playwright test --project=firefox:dev ",
+        "test:dev:firefox:headed": "cross-env CONFIG_FILE=dev npx playwright test --project=firefox:dev --headed",
+        "test:dev:firefox:ui": "cross-env CONFIG_FILE=dev npx playwright test --project=firefox:dev --ui",
+        "test:dev:safari:cli": "cross-env CONFIG_FILE=dev npx playwright test --project=webkit:dev ",
+        "test:dev:safari:headed": "cross-env CONFIG_FILE=dev npx playwright test --project=webkit:dev --headed",
+        "test:dev:safari:ui": "cross-env CONFIG_FILE=dev npx playwright test --project=webkit:dev --ui"
     },
     "devDependencies": {
         "@eslint/js": "^9.39.0",
@@ -29,6 +53,7 @@
         "@types/node": "^24.9.1",
         "@typescript-eslint/eslint-plugin": "^8.46.2",
         "@typescript-eslint/parser": "^8.46.2",
+        "cross-env": "^10.1.0",
         "eslint": "^9.39.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-playwright": "^2.3.0",
@@ -37,5 +62,8 @@
         "prettier": "^3.6.2",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.46.2"
+    },
+    "dependencies": {
+        "dotenv": "^17.2.3"
     }
 }

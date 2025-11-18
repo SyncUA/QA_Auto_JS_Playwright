@@ -10,6 +10,7 @@ export class LogInForm extends HomePage {
     private readonly _forgotPasswordButton: Locator;
     private readonly _registrationButton: Locator;
     private readonly _logInButton: Locator;
+    private readonly _errorMessage: Locator;
 
     private readonly _forgotPasswordForm: Locator;
     private readonly _forgotEmailInput: Locator;
@@ -25,6 +26,7 @@ export class LogInForm extends HomePage {
         this._forgotPasswordButton = this._logInForm.getByRole("button", { name: "Forgot password" });
         this._registrationButton = this._logInForm.getByRole("button", { name: "Registration" });
         this._logInButton = this._logInForm.getByRole("button", { name: "Login" });
+        this._errorMessage = this._logInForm.locator("p.alert.alert-danger");
 
         this._forgotPasswordForm = this.page.locator("app-forgot-password-modal");
         this._forgotEmailInput = this._forgotPasswordForm.locator("#signinEmail");
@@ -73,6 +75,15 @@ export class LogInForm extends HomePage {
         await this.enterPassword(password);
         if (remember) {
             await this._rememberMeCheckbox.check();
+        }
+    }
+    async checkError(boolean: boolean, timeout = 300): Promise<void> {
+        await this.page.waitForTimeout(timeout);
+        if (boolean === false) {
+            await expect(this._errorMessage).not.toBeVisible();
+        } else if (boolean === true) {
+            await expect(this._errorMessage).toBeVisible();
+            await expect(this._errorMessage).toContainText("Wrong email or password");
         }
     }
     async openRegistrationForm(): Promise<void> {
