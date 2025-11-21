@@ -13,8 +13,8 @@ export class BasePage {
         this.form = this.page.locator("div.modal-content");
     }
 
-    async open(uri: string): Promise<void> {
-        await this.page.goto(uri);
+    async open(): Promise<void> {
+        await this.page.goto("/");
         await expect(this.page).toHaveTitle("Hillel Qauto");
     }
     async scrollToHeader(): Promise<void> {

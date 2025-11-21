@@ -42,7 +42,7 @@ const baseConfig = {
     workers: process.env.CI ? 1 : 1 /* Opt out of parallel tests on CI. */,
     reporter: "html" /* Reporter to use. See https://playwright.dev/docs/test-reporters */,
     testIgnore: "e2e/0-0-trash",
-    testMatch: ["e2e/26-*/**/*.spec.ts"],
+    testMatch: ["e2e/28-*/**/*.spec.ts"],
 };
 
 // Визначаємо, чи задано CONFIG_FILE
