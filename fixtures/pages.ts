@@ -1,5 +1,5 @@
 import { test as base } from "@playwright/test";
-import { Pages } from "./types.ts";
+
 import { HomePage } from "../pom/pages/HomePage.ts";
 import { RegistrationForm } from "../pom/forms/RegistrationForm.ts";
 import { LogInForm } from "../pom/forms/LogInForm.ts";
@@ -11,6 +11,20 @@ import { InstructionsPage } from "../pom/pages/InstructionsPage.ts";
 import { ProfilePage } from "../pom/pages/ProfilePage.ts";
 import { SettingsPage } from "../pom/pages/SettingsPage.ts";
 import { RemoveAccountModal } from "../pom/components/RemoveAccountModal.ts";
+
+export interface Pages {
+    homePage: HomePage;
+    registrationForm: RegistrationForm;
+    logInForm: LogInForm;
+    sidebar: Sidebar;
+    garagePage: GaragePage;
+    addCarForm: AddCarForm;
+    fuelExpensesPage: FuelExpensesPage;
+    instructionsPage: InstructionsPage;
+    profilePage: ProfilePage;
+    settingsPage: SettingsPage;
+    removeAccountModal: RemoveAccountModal;
+}
 
 export const pagesFixture = base.extend<{ pages: Pages }>({
     pages: async ({ page }, use) => {
