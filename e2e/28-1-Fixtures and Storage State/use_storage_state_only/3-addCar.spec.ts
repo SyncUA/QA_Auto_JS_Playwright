@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
-import { HomePage } from "../../pom/pages/HomePage.ts";
-import { LogInForm } from "../../pom/forms/LogInForm.ts";
-import { GaragePage } from "../../pom/pages/GaragePage.ts";
-import { AddCarForm } from "../../pom/forms/AddCarForm.ts";
+import { HomePage } from "../../../pom/pages/HomePage.ts";
+import { LogInForm } from "../../../pom/forms/LogInForm.ts";
+import { GaragePage } from "../../../pom/pages/GaragePage.ts";
+import { AddCarForm } from "../../../pom/forms/AddCarForm.ts";
 
 let homePage: HomePage;
 let logInForm: LogInForm;

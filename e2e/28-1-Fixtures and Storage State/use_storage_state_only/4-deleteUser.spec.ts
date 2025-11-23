@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
-import { HomePage } from "../../pom/pages/HomePage.ts";
-import { LogInForm } from "../../pom/forms/LogInForm.ts";
-import { Sidebar } from "../../pom/components/Sidebar.ts";
-import { SettingsPage } from "../../pom/pages/SettingsPage.ts";
-import { RemoveAccountModal } from "../../pom/components/RemoveAccountModal.ts";
+import { HomePage } from "../../../pom/pages/HomePage.ts";
+import { LogInForm } from "../../../pom/forms/LogInForm.ts";
+import { Sidebar } from "../../../pom/components/Sidebar.ts";
+import { SettingsPage } from "../../../pom/pages/SettingsPage.ts";
+import { RemoveAccountModal } from "../../../pom/components/RemoveAccountModal.ts";
 
 let homePage: HomePage;
 let logInForm: LogInForm;

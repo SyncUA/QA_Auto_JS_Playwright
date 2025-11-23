@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import { HomePage } from "../../pom/pages/HomePage.ts";
-import { LogInForm } from "../../pom/forms/LogInForm.ts";
+import { HomePage } from "../../../pom/pages/HomePage.ts";
+import { LogInForm } from "../../../pom/forms/LogInForm.ts";
 
 let homePage: HomePage;
 let logInForm: LogInForm;

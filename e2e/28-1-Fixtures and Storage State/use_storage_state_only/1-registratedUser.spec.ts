@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
-import { HomePage } from "../../pom/pages/HomePage.ts";
-import { RegistrationForm } from "../../pom/forms/RegistrationForm.ts";
-import { Sidebar } from "../../pom/components/Sidebar.ts";
+import { HomePage } from "../../../pom/pages/HomePage.ts";
+import { RegistrationForm } from "../../../pom/forms/RegistrationForm.ts";
+import { Sidebar } from "../../../pom/components/Sidebar.ts";
 
 let homePage: HomePage;
 let registrationForm: RegistrationForm;

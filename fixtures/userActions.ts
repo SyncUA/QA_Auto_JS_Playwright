@@ -1,17 +1,5 @@
 import { pagesFixture } from "./pages.ts";
 
-/* export interface RegisterData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-}
-export interface LoginData {
-    email: string;
-    password: string;
-    remember?: boolean;
-} */
-
 export const userActionsFixture = pagesFixture.extend<{
     userActions: {
         register: (firstName: string, lastName: string, email: string, password: string) => Promise<void>;

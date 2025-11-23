@@ -1,4 +1,4 @@
-import { userActionsFixture as test } from "../../fixtures/userActions.ts";
+import { userActionsFixture as test } from "../../../fixtures/userActions.ts";
 
 test.use({ storageState: "test-data/states/storageState.json" });
 
