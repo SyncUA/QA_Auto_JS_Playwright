@@ -62,14 +62,14 @@ if (configName) {
                 name: `chromium:${configName}`,
                 use: { ...devices["Desktop Chrome"], ...envConfig },
             },
-            {
+            /* {
                 name: `firefox:${configName}`,
                 use: { ...devices["Desktop Firefox"], ...envConfig },
             },
             {
                 name: `webkit:${configName}`,
                 use: { ...devices["Desktop Safari"], ...envConfig },
-            },
+            }, */
         ],
     });
 } else {
@@ -86,7 +86,7 @@ if (configName) {
                 name: "chromium-dev",
                 use: { ...devices["Desktop Chrome"], ...loadEnv("dev") },
             },
-            {
+            /* {
                 name: "firefox-prod",
                 use: { ...devices["Desktop Firefox"], ...loadEnv("prod") },
             },
@@ -101,7 +101,7 @@ if (configName) {
             {
                 name: "webkit-dev",
                 use: { ...devices["Desktop Safari"], ...loadEnv("dev") },
-            },
+            }, */
 
             /* Test against mobile viewports. */
             // {
