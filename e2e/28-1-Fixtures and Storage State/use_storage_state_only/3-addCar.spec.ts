@@ -13,8 +13,6 @@ test.describe("Add car", () => {
     test.use({ storageState: "test-data/states/storageState.json" });
 
     test("Add car", async ({ page }, testInfo) => {
-        const { testUser } = testInfo.project.use as any;
-
         homePage = new HomePage(page);
         logInForm = new LogInForm(page);
         garagePage = new GaragePage(page);

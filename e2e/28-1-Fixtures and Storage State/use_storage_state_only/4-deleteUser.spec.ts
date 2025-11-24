@@ -12,9 +12,7 @@ let settingsPage: SettingsPage;
 let removeAccountModal: RemoveAccountModal;
 
 test.use({ storageState: "test-data/states/storageState.json" });
-test("Delete user", async ({ page }, testInfo) => {
-    const { testUser } = testInfo.project.use as any;
-
+test("Delete user", async ({ page }) => {
     homePage = new HomePage(page);
     logInForm = new LogInForm(page);
     sidebar = new Sidebar(page);
