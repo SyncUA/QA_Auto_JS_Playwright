@@ -17,7 +17,6 @@ export default async function globalSetup(config: FullConfig) {
 
     await page.goto(baseURL);
 
-    // 🔧 Допоміжні функції
     async function register(page: Page, email: string, password: string) {
         await page.getByRole("button", { name: "Sign up" }).click();
         await page.fill("#signupName", "John");

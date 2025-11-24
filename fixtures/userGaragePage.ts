@@ -9,7 +9,6 @@ export const test = base.extend<{
     userGarage: GaragePage;
     addCarForm: AddCarForm;
 }>({
-    // спільний авторизований page на основі storageState
     authPage: async ({ browser }, use) => {
         const statePath = path.resolve("test-data/states/storageState.json");
         fs.mkdirSync(path.dirname(statePath), { recursive: true });
@@ -21,14 +20,12 @@ export const test = base.extend<{
 
         await context.close();
     },
-
     userGarage: async ({ authPage }, use) => {
         const garagePage = new GaragePage(authPage);
         await garagePage.open();
         await garagePage.verifyGaragePage();
         await use(garagePage);
     },
-
     addCarForm: async ({ authPage }, use) => {
         await use(new AddCarForm(authPage));
     },
