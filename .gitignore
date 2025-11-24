@@ -1,6 +1,7 @@
 node_modules
 0-0-trash
 # Playwright
+/test-data/
 /test-results/
 /playwright-report/
 /blob-report/

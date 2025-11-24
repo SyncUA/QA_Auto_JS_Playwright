@@ -41,8 +41,9 @@ const baseConfig = {
     retries: process.env.CI ? 2 : 0 /* Retry on CI only */,
     workers: process.env.CI ? 1 : 1 /* Opt out of parallel tests on CI. */,
     reporter: "html" /* Reporter to use. See https://playwright.dev/docs/test-reporters */,
-    testIgnore: ["e2e/0-0-trash", "e2e/28-1-Fixtures and Storage State/use_fixture+use_state/7-addCarFIXTURE.spec.ts"],
-    testMatch: ["e2e/28-*/**/*.spec.ts"],
+    testIgnore: "e2e/0-0-trash",
+    testMatch: ["e2e/28-1-Fixtures and Storage State/use_fixture+use_state/7-addCarFIXTURE.spec.ts"],
+    globalSetup: "./playwright.setup.ts",
 };
 
 // Визначаємо, чи задано CONFIG_FILE
