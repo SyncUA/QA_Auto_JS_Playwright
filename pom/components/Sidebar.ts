@@ -11,10 +11,10 @@ export class Sidebar extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        this._garageButton = this.page.locator('a[href="/panel/garage"]');
-        this._fuelExpensesButton = this.page.locator('a[href="/panel/expenses"]');
-        this._instructionsButton = this.page.locator('a[href="/panel/instructions"]');
-        this._profileButton = this.page.locator('a[href="/panel/profile"]');
+        this._garageButton = this.page.locator('a.sidebar_btn[href="/panel/garage"]');
+        this._fuelExpensesButton = this.page.locator('a.sidebar_btn[href="/panel/expenses"]');
+        this._instructionsButton = this.page.locator('a.sidebar_btn[href="/panel/instructions"]');
+        this._profileButton = this.page.locator('a.sidebar_btn[href="/panel/profile"]');
         this._settingsButton = this.page.locator('a.sidebar_btn[href="/panel/settings"]');
         this._logOutButton = this.page.locator("a.btn.btn-link.text-danger.btn-sidebar.sidebar_btn", { hasText: "Log out" });
     }
