@@ -1,0 +1,33 @@
+import { test } from "@playwright/test";
+import { HomePage } from "../../pom/pages/HomePage.ts";
+import { LogInForm } from "../../pom/forms/LogInForm.ts";
+import { Sidebar } from "../../pom/components/Sidebar.ts";
+import { SettingsPage } from "../../pom/pages/SettingsPage.ts";
+import { RemoveAccountModal } from "../../pom/components/RemoveAccountModal.ts";
+
+let homePage: HomePage;
+let logInForm: LogInForm;
+let sidebar: Sidebar;
+let settingsPage: SettingsPage;
+let removeAccountModal: RemoveAccountModal;
+
+test("Delete user", async ({ page }, testInfo) => {
+    const { testUser } = testInfo.project.use as any;
+
+    homePage = new HomePage(page);
+    logInForm = new LogInForm(page);
+    sidebar = new Sidebar(page);
+    settingsPage = new SettingsPage(page);
+    removeAccountModal = new RemoveAccountModal(page);
+
+    await homePage.open();
+    await homePage.openLogInForm();
+    await logInForm.fillLogInForm(testUser.email, testUser.password, true);
+    await logInForm.clickLogInButton();
+    await logInForm.checkError(false);
+    await sidebar.verifySidebarVisible();
+    await sidebar.clickSettingsButton();
+    await settingsPage.scrollToFooter();
+    await settingsPage.removeAccount();
+    await removeAccountModal.clickRemove();
+});

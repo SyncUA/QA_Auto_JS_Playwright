@@ -11,7 +11,7 @@ test("Log in user", async ({ page }, testInfo) => {
     homePage = new HomePage(page);
     logInForm = new LogInForm(page);
 
-    await homePage.open("/");
+    await homePage.open();
     await homePage.openLogInForm();
     await logInForm.fillLogInForm(testUser.email, testUser.password, true);
     await logInForm.clickLogInButton();

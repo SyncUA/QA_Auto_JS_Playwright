@@ -11,7 +11,7 @@ test("Registration user", async ({ page }, testInfo) => {
     homePage = new HomePage(page);
     registrationForm = new RegistrationForm(page);
 
-    await homePage.open("/");
+    await homePage.open();
     await homePage.openRegistrationForm();
     await registrationForm.fillRegistrationForm("Stanislav", "Kolisnyk", testUser.email, testUser.password);
     await registrationForm.clickRegistrationButton();

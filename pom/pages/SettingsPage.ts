@@ -49,9 +49,9 @@ export class SettingsPage extends BasePage {
         this._changePasswordButton = page.locator("button.btn-warning-bg", { hasText: "Change password" });
 
         // Видалення акаунта
-
         this._removeAccountButton = page.locator("button.btn-danger-bg", { hasText: "Remove my account" });
     }
+
     async open(): Promise<void> {
         await this.page.goto("/panel/settings");
     }
